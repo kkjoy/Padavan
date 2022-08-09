@@ -36,13 +36,6 @@ sdnse_cache=`nvram get sdnse_cache`
 ss_white=`nvram get ss_white`
 ss_black=`nvram get ss_black`
 
-check_ss(){
-if [ $(nvram get ss_enable) = 1 ] && [ $(nvram get ss_run_mode) = "router" ] && [ $(nvram get pdnsd_enable) = 0 ]; then
-logger -t "SmartDNS" "系统检测到SS模式为绕过大陆模式，并且启用了pdnsd,请先调整SS解析使用SmartDNS+手动配置模式！程序将退出。"
-nvram set sdns_enable=0
-exit 0
-fi
-}
 
 get_tz()
 {
@@ -93,7 +86,6 @@ echo "serve-expired yes" >> $SMARTDNS_CONF
 else
 echo "serve-expired no" >> $SMARTDNS_CONF
 fi
-echo "log-level info" >> $SMARTDNS_CONF
 listnum=`nvram get sdnss_staticnum_x`
 for i in $(seq 1 $listnum)
 do
